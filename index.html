@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz</title>
+    <link rel="stylesheet" href="styles.css">
+
+</head>
+<body>
+    <div class="center-content">
+        <div class="typewriter">
+         <p id="line1">Danielu, oto kurs</p>
+<p id="line2">pod nazwą "Korepetycje Marcela".</p>
+<p id="line3">Ucz się codziennie, ta aplikacja śledzi Twoją aktywność</p>
+<p id="line4">i informuje Marcela, gdy nie wykonujesz zadań.</p>
+
+        </div>
+        <div class="container" id="quiz-container" style="visibility: hidden;">
+            <h1>Rozpocznij zerowke</h1>
+            <div id="quiz-selection">
+                <button onclick="startQuiz(1)">Świąd</button>
+                <button onclick="startQuiz(2)">Łuszczyca </button>
+                <button onclick="startQuiz(3)">Pokrzywka</button>
+                <button onclick="startQuiz(4)">Pęcherzyca</button>
+                <button onclick="startQuiz(5)">Gruczoły</button>
+                <button onclick="startQuiz(6)">Dermatologia Reumatyczna</button>
+                <button onclick="startQuiz(7)">Mucynozy</button>
+                <button onclick="startQuiz(8)">Genodermatozy</button>
+                <button onclick="startQuiz(9)">Biologia melanocytów</button>
+                <button onclick="startQuiz(10)">Biologia włosów i paznokci</button>
+                          <button onclick="startQuiz(11)">PES z 2012-2022</button>
+                       
+                <button onclick="startQuiz('random')">Egzamin finałowy</button>
+            </div>
+        </div>
+    </div>
+    <script>
+        function typeWriter(text, element, delay, callback) {
+            let i = 0;
+            element.style.visibility = 'visible';
+            element.innerHTML = ''; // Clear any existing text
+            function typing() {
+                if (i < text.length) {
+                    element.innerHTML += text.charAt(i);
+                    i++;
+                    setTimeout(typing, delay);
+                } else if (callback) {
+                    setTimeout(callback, delay);
+                }
+            }
+            typing();
+        }
+ document.getElementById('quiz-container').style.visibility = 'visible';
+        document.addEventListener('DOMContentLoaded', function() {
+            typeWriter("Witaj Danielu, na twoim prywatnym kursie pod nazwa \"Korepetycje Marcela\".", document.getElementById('line1'), 20, function() {
+                typeWriter("Ucz sie co dziennie, ta aplikacja sledzi twoja aktywnosc", document.getElementById('line2'), 20, function() {
+                    typeWriter("i informuje Marcela gdy nie wykonujesz zadan.", document.getElementById('line3'), 20, function() {
+                       
+                    });
+                });
+            });
+        });
+
+        function startQuiz(quizNumber) {
+            window.location.href = 'quiz.html?quiz=' + quizNumber;
+        }
+    </script>
+    <script src="scripts.js"></script>
+</body>
+</html>

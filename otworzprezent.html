@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday Daniel</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background-color: white;
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            position: relative;
+            background: linear-gradient(to bottom right, #ffcccc, #ffe6e6);
+        }
+        video {
+            width: 50%;
+            height: auto;
+            display: block;
+            z-index: 2;
+            border: 5px solid #ff69b4;
+            border-radius: 15px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+        }
+        #openButton {
+            display: none;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 10px 20px;
+            background-color: blue;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 20px;
+            z-index: 2;
+            animation: fadeIn 2s;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        #message {
+            margin-top: 40px;
+            font-size: 24px;
+            text-align: center;
+            z-index: 2;
+            color: #ff69b4;
+            animation: fadeIn 2s;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            line-height: 1.5;
+        }
+        #fireworks {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+        }
+        .balloon {
+            position: absolute;
+            bottom: -150px;
+            width: 50px;
+            height: 70px;
+            background-color: red;
+            border-radius: 50%;
+            animation: floatUp 5s ease-in-out infinite;
+        }
+        .balloon:nth-child(2) {
+            background-color: yellow;
+            width: 60px;
+            height: 80px;
+            left: 20%;
+            animation-duration: 7s;
+        }
+        .balloon:nth-child(3) {
+            background-color: blue;
+            left: 40%;
+            animation-duration: 6s;
+        }
+        .balloon:nth-child(4) {
+            background-color: green;
+            width: 70px;
+            height: 90px;
+            left: 60%;
+            animation-duration: 8s;
+        }
+        .balloon:nth-child(5) {
+            background-color: pink;
+            left: 80%;
+            animation-duration: 5.5s;
+        }
+        @keyframes floatUp {
+            0% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-1000px);
+                opacity: 0;
+            }
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <video id="presentVideo" src="Animated Present Box.mp4" type="video/mp4"></video>
+    <button id="openButton">Kliknij aby otworzyć</button>
+    <div id="message">
+        Danielu, z okazji Twoich urodzin życzę Ci wszystkiego, co najlepsze, a głównie żebyś zmądrzał. <br><br> Wiedz, że już się nigdy nie odczepię i już nigdy nie będziesz sam. <br><br> Wspieram Cię we wszystkim, co dla Ciebie najważniejsze i mam nadzieję, że ten prezent to pokazuje.
+    </div>
+    <canvas id="fireworks"></canvas>
+    <div class="balloon" style="left: 10%;"></div>
+    <div class="balloon" style="left: 30%;"></div>
+    <div class="balloon" style="left: 50%;"></div>
+    <div class="balloon" style="left: 70%;"></div>
+    <div class="balloon" style="left: 90%;"></div>
+
+    <script>
+        const video = document.getElementById('presentVideo');
+        const button = document.getElementById('openButton');
+        const canvas = document.getElementById('fireworks');
+        const ctx = canvas.getContext('2d');
+
+        // Fireworks animation
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        const fireworks = [];
+        const particles = [];
+        const colors = ['#ff0000', '#ff8400', '#ffc000', '#fff000', '#bfff00', '#60ff00', '#00ff9f', '#00ffff', '#009fff', '#0040ff', '#4000ff', '#b000ff', '#ff00ff', '#ff009f'];
+
+        function random(min, max) {
+            return Math.random() * (max - min) + min;
+        }
+
+        function createFirework() {
+            const x = random(0, canvas.width);
+            const y = random(0, canvas.height / 2);
+            const color = colors[Math.floor(random(0, colors.length))];
+            fireworks.push({ x, y, color });
+        }
+
+        function createParticles(firework) {
+            for (let i = 0; i < 100; i++) {
+                const angle = random(0, Math.PI * 2);
+                const speed = random(1, 6);
+                particles.push({
+                    x: firework.x,
+                    y: firework.y,
+                    color: firework.color,
+                    vx: Math.cos(angle) * speed,
+                    vy: Math.sin(angle) * speed,
+                    alpha: 1,
+                    life: random(20, 100)
+                });
+            }
+        }
+
+        function updateParticles() {
+            for (let i = particles.length - 1; i >= 0; i--) {
+                const p = particles[i];
+                p.x += p.vx;
+                p.y += p.vy;
+                p.alpha -= 0.02;
+                p.life--;
+                if (p.life <= 0 || p.alpha <= 0) {
+                    particles.splice(i, 1);
+                }
+            }
+        }
+
+        function drawParticles() {
+            particles.forEach(p => {
+                ctx.globalAlpha = p.alpha;
+                ctx.fillStyle = p.color;
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, 2, 0, Math.PI * 2);
+                ctx.fill();
+            });
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            if (Math.random() < 0.05) {
+                createFirework();
+            }
+            fireworks.forEach((firework, index) => {
+                createParticles(firework);
+                fireworks.splice(index, 1);
+            });
+            updateParticles();
+            drawParticles();
+            requestAnimationFrame(animate);
+        }
+
+        animate();
+
+        video.play();
+
+        // Stop the video after 2 seconds and show the button
+        setTimeout(() => {
+            video.pause();
+            button.style.display = 'block';
+        }, 2000);
+
+        button.addEventListener('click', () => {
+            button.style.display = 'none';
+            video.play();
+        });
+
+        video.addEventListener('ended', () => {
+            window.location.href = 'index.html';
+        });
+    </script>
+</body>
+</html>

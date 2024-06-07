@@ -1,0 +1,190 @@
+
+/* Base Styles */
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #e0f7fa;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    overflow: auto;
+    background-image: url('https://user-images.githubusercontent.com/39142850/67110554-fdea5400-f20d-11e9-834a-d459a612b7b1.gif');
+    background-size: cover;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    color: white; /* Ensure text is readable */
+}
+
+.container {
+    text-align: center;
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    animation: fadeIn 1s ease-in-out;
+    width: 90%;
+    max-width: 800px;
+    margin: 20px auto;
+}
+
+h1 {
+    margin-bottom: 20px;
+    color: #007BFF;
+    font-size: 3em;
+    font-weight: bold;
+    animation: fadeIn 1s ease-in-out;
+}
+
+button {
+    display: inline-block;
+    padding: 10px 20px;
+    margin: 10px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+    font-size: 1em;
+}
+
+button:hover {
+    background-color: #0056b3;
+    transform: scale(1.1);
+}
+
+#quiz-status, #quiz-container, .question, #result, .explanation {
+    margin: 20px 0;
+    animation: fadeIn 1s ease-in-out;
+    color: #007BFF;
+}
+
+.question {
+    font-size: 1.2em; /* Reduced font size */
+    display: block;
+    margin-bottom: 20px;
+}
+
+label {
+    margin-left: 10px;
+    color: #007BFF;
+    font-size: 1.0em;
+}
+
+#result {
+    font-weight: bold;
+    font-size: 1.5em;
+}
+
+.explanation {
+    color: #ff0000;
+    font-size: 1.2em;
+}
+
+.score {
+    font-size: 18px;
+    margin-bottom: 20px;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+.typewriter h1, .typewriter p {
+    overflow: hidden; /* Ensures the content is hidden until it is revealed */
+    border-right: .15em solid white; /* The caret */
+    white-space: nowrap; /* Keeps the content on a single line */
+    margin: 0 auto; /* Gives a centered look */
+    letter-spacing: .15em; /* Spacing between letters */
+    animation: typing 3.5s steps(40, end), blink-caret .75s step-end infinite;
+}
+
+.typewriter p {
+    font-size: 1.5em; /* Adjust the size to be smaller */
+    max-width: 100%; /* Adjusts to the window size */
+    display: inline-block;
+    visibility: hidden; /* Initially hide the text */
+}
+
+.center-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 50vh; /* Adjust to fit the window better */
+    text-align: center;
+    padding: 0 10px;
+    max-width: 100%; 
+}
+
+.container {
+    margin-top: 60px; /* Added margin to ensure space after the typing animation */
+}
+
+#quiz-selection button {
+    margin: 5px;
+    padding: 10px 20px;
+    font-size: 1em;
+    cursor: pointer;
+}
+
+/* Media queries for responsiveness */
+@media (max-width: 768px) {
+    h1 {
+        font-size: 2em;
+    }
+
+    .typewriter p {
+        font-size: 1em;
+    }
+
+    #quiz-selection button {
+        font-size: 0.9em;
+        padding: 8px 16px;
+    }
+
+    .question {
+        font-size: 1em;
+    }
+
+    #result {
+        font-size: 1.2em;
+    }
+
+    .explanation {
+        font-size: 1em;
+    }
+}
+
+@media (max-width: 480px) {
+    h1 {
+        font-size: 1.5em;
+    }
+
+    .typewriter p {
+        font-size: 0.8em;
+    }
+
+    #quiz-selection button {
+        font-size: 0.8em;
+        padding: 6px 12px;
+    }
+
+    .question {
+        font-size: 0.8em;
+    }
+
+    #result {
+        font-size: 1em;
+    }
+
+    .explanation {
+        font-size: 0.8em;
+    }
+
+    .container {
+        padding: 20px;
+    }
+}
